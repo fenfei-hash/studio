@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
@@ -32,7 +32,7 @@ function WarningDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (o
             </p>
             <div className="flex items-center gap-3 p-3 rounded-md bg-accent/20 border border-accent/30 text-accent-foreground/80">
               <SpeakerLoudIcon className="w-6 h-6 text-accent" />
-              <p>
+              <p className="text-primary">
                 Turn up your volume when reading for a more immersive experience.
               </p>
             </div>
