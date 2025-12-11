@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Film } from 'lucide-react';
 
 // NOTE: This is a placeholder video. In a real application, this would be a proper jumpscare video/gif.
 const JUMPSCARE_VIDEO_URL = "https://storage.googleapis.com/nightmare/nightmare%20(1).mp4";
@@ -81,9 +82,17 @@ export function GameOverClientContent() {
             </div>
           </div>
 
-          <Button asChild size="lg">
-            <Link href="/">Try Again</Link>
-          </Button>
+          <div className="flex justify-center gap-4">
+            <Button asChild size="lg">
+              <Link href="/">Try Again</Link>
+            </Button>
+             <Button asChild size="lg" variant="outline">
+              <a href={JUMPSCARE_VIDEO_URL} target="_blank" rel="noopener noreferrer">
+                <Film className="mr-2 h-5 w-5"/>
+                Watch Trailer
+              </a>
+            </Button>
+          </div>
         </div>
       </main>
     );
