@@ -1,6 +1,6 @@
 
 "use client";
-
+export const dynamic = 'force-dynamic';
 import { Button } from "@/components/ui/button";
 import { gameOverContent } from "@/lib/game-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
