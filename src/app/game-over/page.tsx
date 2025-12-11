@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -76,9 +77,7 @@ export default function GameOverPage() {
               />
             )}
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-              <h2 className="text-4xl font-headline font-extrabold text-white tracking-widest uppercase">
-                {gameOverContent.moviePoster.title}
-              </h2>
+              
               <p className="text-xl text-accent font-bold">{gameOverContent.moviePoster.tagline}</p>
             </div>
           </div>
