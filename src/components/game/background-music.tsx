@@ -6,9 +6,9 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { VolumeX, Volume2 } from "lucide-react";
 
-const HOME_MUSIC_URL = "https://cdn.pixabay.com/audio/2024/07/09/audio_b8fc051d1b.mp3";
-const INTRO_MUSIC_URL = "https://cdn.pixabay.com/audio/2023/10/24/audio_b863897a66.mp3"; 
-const HORROR_PIANO_URL = "https://cdn.pixabay.com/audio/2023/10/24/audio_b863897a66.mp3";
+const HOME_MUSIC_URL = "https://cdn.pixabay.com/audio/2025/12/05/audio_b8fc051d1b.mp3";
+const INTRO_MUSIC_URL = "https://cdn.pixabay.com/audio/2024/10/17/audio_0666eeb332.mp3"; 
+const HORROR_PIANO_URL = "https://cdn.pixabay.com/audio/2022/07/05/audio_397d005fdb.mp3";
 
 
 export function BackgroundMusic() {
