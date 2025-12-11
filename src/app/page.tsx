@@ -68,7 +68,7 @@ export default function Home() {
           <h1 className="text-4xl font-headline font-bold text-primary tracking-wider">
             THE WARD
           </h1>
-          <p className="text-lg text-foreground/80 font-headline">Run</p>
+          <p className="text-lg text-foreground/80 font-headline">made by See Fen Fei</p>
         </CardHeader>
         <CardContent className="text-center">
           <CardDescription className="mb-6 text-foreground/90">
