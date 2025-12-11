@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { BackgroundMusic } from '@/components/game/background-music';
+import { FirebaseProvider } from '@/firebase/provider';
 
 export const metadata: Metadata = {
   title: 'The Ward: Eyeless Escape',
@@ -21,9 +22,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Literata:opsz@6..72&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <BackgroundMusic />
-        {children}
-        <Toaster />
+        <FirebaseProvider>
+          <BackgroundMusic />
+          {children}
+          <Toaster />
+        </FirebaseProvider>
       </body>
     </html>
   );
