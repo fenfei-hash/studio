@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -18,59 +19,16 @@ const videoUrls = [
 
 const allAssets = [...imageUrls, ...audioUrls, ...videoUrls];
 
-const AssetLoader = ({ src, onLoaded }: { src: string, onLoaded: () => void }) => {
-  useEffect(() => {
-    let element: HTMLImageElement | HTMLAudioElement | HTMLVideoElement;
-    let didLoad = false;
-
-    const handleLoad = () => {
-      if (!didLoad) {
-        onLoaded();
-        didLoad = true;
-      }
-    };
-
-    const isVideo = videoUrls.includes(src);
-    const isAudio = audioUrls.includes(src);
-
-    if (isVideo) {
-      element = document.createElement('video');
-      element.src = src;
-      element.oncanplaythrough = handleLoad;
-      element.onerror = handleLoad; // Treat error as loaded to not block the app
-      element.load();
-    } else if (isAudio) {
-      element = document.createElement('audio');
-      element.src = src;
-      element.oncanplaythrough = handleLoad;
-      element.onerror = handleLoad;
-      element.load();
-    } else {
-      element = new Image();
-      element.src = src;
-      element.onload = handleLoad;
-      element.onerror = handleLoad;
-    }
-
-    // Fallback timer in case load events don't fire (e.g., for cached assets)
-    const timer = setTimeout(handleLoad, 5000);
-
-    return () => {
-      clearTimeout(timer);
-      // Cleanup to avoid memory leaks
-      if (element) {
-        element.onload = null;
-        element.onerror = null;
-        if ('oncanplaythrough' in element) {
-            element.oncanplaythrough = null;
-        }
-        element.src = '';
-      }
-    };
-  }, [src, onLoaded]);
-
-  return null; // This component does not render anything
-};
+async function preloadAsset(src: string) {
+  try {
+    // Use fetch to request the asset. The 'no-cors' mode is a fallback for cross-origin issues,
+    // though it means we can't read the response body. We just care if it loads.
+    await fetch(src, { mode: 'no-cors' });
+  } catch (error) {
+    // We can log the error, but we don't want to block the user.
+    console.warn(`Could not preload asset: ${src}`, error);
+  }
+}
 
 export function PreloadingScreen({ onReady }: { onReady: () => void }) {
   const [loadedCount, setLoadedCount] = useState(0);
@@ -78,17 +36,36 @@ export function PreloadingScreen({ onReady }: { onReady: () => void }) {
   const progress = totalAssets > 0 ? (loadedCount / totalAssets) * 100 : 100;
 
   useEffect(() => {
+    let isCancelled = false;
+
+    async function preloadAll() {
+      const preloadPromises = allAssets.map(src => 
+        preloadAsset(src).then(() => {
+          if (!isCancelled) {
+            setLoadedCount(prev => prev + 1);
+          }
+        })
+      );
+      await Promise.all(preloadPromises);
+    }
+
+    preloadAll();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
     if (loadedCount === totalAssets) {
         // A short delay to ensure the progress bar hits 100% visually
-        setTimeout(onReady, 300);
+        const timer = setTimeout(onReady, 300);
+        return () => clearTimeout(timer);
     }
   }, [loadedCount, totalAssets, onReady]);
   
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
-       {allAssets.map((src, index) => (
-        <AssetLoader key={index} src={src} onLoaded={() => setLoadedCount(prev => prev + 1)} />
-      ))}
       <div className="w-full max-w-sm text-center">
         <h1 className="text-2xl font-headline text-primary mb-4 animate-pulse">
             The horrors are gathering...
