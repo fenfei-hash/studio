@@ -51,7 +51,7 @@ export default function GameOverPage() {
           autoPlay 
           muted
           playsInline
-          className="w-auto h-auto min-w-full min-h-full" 
+          className="w-auto h-auto min-w-full min-h-full object-cover" 
           aria-label="Jumpscare sequence"
         />
         <audio ref={audioRef} src={SCREAM_SOUND_URL} preload="auto" aria-label="Scream sound effect"></audio>

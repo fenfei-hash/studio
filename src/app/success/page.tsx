@@ -25,7 +25,7 @@ export default function SuccessPage() {
                                 src={imageData.imageUrl}
                                 alt={imageData.description}
                                 fill
-                                className="object-contain"
+                                className="object-cover"
                                 data-ai-hint={imageData.imageHint}
                                 priority
                             />
