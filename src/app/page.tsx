@@ -33,7 +33,7 @@ function WarningDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (o
               </p>
               <div className="flex items-center gap-3 p-3 rounded-md bg-accent/20 border border-accent/30 text-accent-foreground/80">
                 <SpeakerLoudIcon className="w-6 h-6 text-accent" />
-                <p className="text-primary">
+                <p className="text-foreground">
                   Turn up your volume when reading for a more immersive experience.
                 </p>
               </div>
