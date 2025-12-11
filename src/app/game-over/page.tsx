@@ -1,19 +1,19 @@
 
 "use client";
-export const dynamic = 'force-dynamic';
+
 import { Button } from "@/components/ui/button";
 import { gameOverContent } from "@/lib/game-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 
 // NOTE: This is a placeholder video. In a real application, this would be a proper jumpscare video/gif.
-const JUMPSCARE_VIDEO_URL = "https://storage.googleapis.com/nightmare/nightmare%20(1).mp4"; 
+const JUMPSCARE_VIDEO_URL = "https://storage.googleapis.com/nightmare/nightmare%20(1).mp4";
 const SCREAM_SOUND_URL = "https://cdn.pixabay.com/audio/2022/03/10/audio_09968be149.mp3";
 
-export default function GameOverPage() {
+function GameOverContent() {
   const [showJumpscare, setShowJumpscare] = useState(true);
   const [showPoster, setShowPoster] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -91,4 +91,12 @@ export default function GameOverPage() {
   }
 
   return null;
+}
+
+export default function GameOverPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <GameOverContent />
+        </Suspense>
+    )
 }
