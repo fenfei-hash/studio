@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { VolumeX, Volume2 } from "lucide-react";
 
-const INTRO_MUSIC_URL = "https://cdn.pixabay.com/download/audio/2024/05/09/audio_651a14c33d.mp3";
-const GAME_MUSIC_URL = "https://cdn.pixabay.com/download/audio/2024/07/22/audio_f59c748729.mp3";
+const HOME_MUSIC_URL = "https://cdn.pixabay.com/audio/2022/10/26/audio_736636a23a.mp3";
+const INTRO_MUSIC_URL = "https://cdn.pixabay.com/audio/2022/10/26/audio_736636a23a.mp3";
+const GAME_MUSIC_URL = "https://cdn.pixabay.com/audio/2024/05/09/audio_651a14c33d.mp3";
 
 export function BackgroundMusic() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -15,6 +16,9 @@ export function BackgroundMusic() {
   const pathname = usePathname();
 
   const getMusicUrl = () => {
+    if (pathname === '/') {
+      return HOME_MUSIC_URL;
+    }
     if (pathname.startsWith('/game/intro-')) {
       return INTRO_MUSIC_URL;
     }
@@ -28,17 +32,19 @@ export function BackgroundMusic() {
     if (audio) {
       if (audio.src !== musicUrl) {
         const currentTime = audio.currentTime;
-        const isPlaying = !audio.paused;
+        const wasPlaying = !audio.paused;
         audio.src = musicUrl;
         audio.load();
-        if (isPlaying) {
+        if (wasPlaying && hasInteracted) {
           audio.play().then(() => {
-            audio.currentTime = currentTime;
+            if(audio.src === musicUrl) { // Check if src hasn't changed again
+              audio.currentTime = 0; // Start new track from beginning
+            }
           }).catch(e => console.error("Error playing new track:", e));
         }
       }
     }
-  }, [musicUrl]);
+  }, [musicUrl, hasInteracted]);
 
 
   useEffect(() => {
