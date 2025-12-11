@@ -38,9 +38,7 @@ export function BackgroundMusic() {
   useEffect(() => {
     const handleFirstInteraction = () => {
       setHasInteracted(true);
-      if (audioRef.current && audioRef.current.paused) {
-          audioRef.current.play().catch(e => console.error("Audio play failed:", e));
-      }
+      // Let the other effect handle playback
       window.removeEventListener('click', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
     };
@@ -61,19 +59,51 @@ export function BackgroundMusic() {
 
     const newMusicUrl = getMusicUrl(pathname);
 
+    // If the new URL is different, we need to change tracks.
     if (newMusicUrl && audio.src !== newMusicUrl) {
+        // Pause and reset current track to prevent interruption errors
+        audio.pause();
+        audio.currentTime = 0;
+        
         audio.src = newMusicUrl;
-        audio.load();
-        if(hasInteracted) {
-            audio.play().catch(e => console.error("Audio play on track change failed:", e));
+        audio.load(); // Explicitly load the new source
+        
+        // Play only after interaction and when the new track is ready
+        if (hasInteracted) {
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              // Autoplay was prevented.
+              if (error.name !== 'AbortError') {
+                console.error("Audio play on track change failed:", error);
+              }
+            });
+          }
         }
     } else if (!newMusicUrl) {
         audio.pause();
+        audio.currentTime = 0;
     }
     
+    // Always respect the mute state
     audio.muted = isMuted;
 
   }, [pathname, hasInteracted, isMuted]);
+
+  // Effect to handle initial play after interaction
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (hasInteracted && audio && audio.paused && audio.src) {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                if (error.name !== 'AbortError') {
+                    console.error("Audio play after interaction failed:", error);
+                }
+            });
+        }
+    }
+  }, [hasInteracted]);
 
   const toggleMute = () => {
     // If this is the first interaction, it will also trigger the playback
@@ -85,7 +115,6 @@ export function BackgroundMusic() {
 
   return (
     <>
-      {/* We don't set the src here initially to avoid errors */}
       <audio ref={audioRef} loop playsInline />
       <Button
         variant="ghost"
