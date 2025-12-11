@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { SpeakerLoudIcon } from "@radix-ui/react-icons";
 import { TriangleAlert } from "lucide-react";
+import { PreloadingScreen } from "@/components/game/preloading-screen";
 
 function WarningDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void }) {
   return (
@@ -31,7 +32,7 @@ function WarningDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (o
               <p>
                 This website contains shocking scenes, jump scares, and mature themes. Viewer discretion is advised for pregnant women, the elderly, and those with weak hearts.
               </p>
-              <div className="flex items-center gap-3 p-3 rounded-md bg-accent/20 border border-accent/30 text-accent-foreground/80">
+              <div className="flex items-center gap-3 p-3 rounded-md bg-accent/20 border border-accent/30">
                 <SpeakerLoudIcon className="w-6 h-6 text-accent" />
                 <p className="text-foreground">
                   Turn up your volume when reading for a more immersive experience.
@@ -51,12 +52,18 @@ function WarningDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (o
 
 export default function Home() {
   const [showWarning, setShowWarning] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Always show the warning on page load
-    setShowWarning(true);
-  }, []);
+    // Show warning only after preloading is complete
+    if (isReady) {
+      setShowWarning(true);
+    }
+  }, [isReady]);
 
+  if (!isReady) {
+    return <PreloadingScreen onReady={() => setIsReady(true)} />;
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-background animate-flicker">
