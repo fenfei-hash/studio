@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { VolumeX, Volume2 } from "lucide-react";
 
-const MUSIC_URL = "https://cdn.pixabay.com/download/audio/2022/10/26/audio_f51a709a39.mp3";
+const MUSIC_URL = "https://cdn.pixabay.com/download/audio/2023/10/18/audio_845c48c692.mp3";
 
 export function BackgroundMusic() {
   const audioRef = useRef<HTMLAudioElement>(null);
