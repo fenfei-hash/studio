@@ -39,8 +39,7 @@ export default function SuccessPage() {
                      <div className="fixed inset-0 bg-black flex items-center justify-center z-[101]">
                         <video 
                             src={JUMPSCARE_VIDEO_URL} 
-                            autoPlay 
-                            muted
+                            autoPlay
                             playsInline
                             className="w-auto h-auto min-w-full min-h-full object-cover" 
                             aria-label="Jumpscare sequence"
