@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-const JUMPSCARE_VIDEO_URL = "https://storage.googleapis.com/nightmare/nightmare%20(1).mp4";
+const JUMPSCARE_VIDEO_URL = "https://storage.googleapis.com/nightmare/one_last_scare.mp4";
 const SCREAM_SOUND_URL = "https://cdn.pixabay.com/audio/2022/03/10/audio_09968be149.mp3";
 
 export default function SuccessPage() {
@@ -45,7 +45,7 @@ export default function SuccessPage() {
                             className="w-auto h-auto min-w-full min-h-full object-cover" 
                             aria-label="Jumpscare sequence"
                         />
-                        <audio ref={audioRef} src={SCREAM_SOUND_URL} preload="auto"></audio>
+                        <audio ref={audioRef} src={SREAM_SOUND_URL} preload="auto"></audio>
                     </div>
                 )}
             </div>
