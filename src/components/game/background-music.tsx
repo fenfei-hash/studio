@@ -120,10 +120,10 @@ export function BackgroundMusic() {
         variant="ghost"
         size="icon"
         onClick={toggleMute}
-        className="fixed bottom-4 right-4 z-50 text-foreground/50 hover:text-foreground"
+        className="fixed top-6 right-6 z-50 text-foreground/50 hover:text-foreground h-12 w-12"
         aria-label={isMuted ? "Unmute music" : "Mute music"}
       >
-        {isMuted ? <VolumeX /> : <Volume2 />}
+        {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
       </Button>
     </>
   );
