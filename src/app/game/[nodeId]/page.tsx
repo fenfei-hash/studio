@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Timer } from '@/components/game/timer';
 import { MoveRight } from 'lucide-react';
-import { DynamicDescription } from '@/components/game/dynamic-description';
 import { Suspense } from 'react';
 
 function ChoiceButton({ choice, nodeId }: { choice: Choice; nodeId: string }) {
@@ -51,9 +50,8 @@ export default function GamePage({ params }: { params: { nodeId: string } }) {
   const previousChoices = previousChoicesMap[nodeId] || [];
 
   return (
-    <>
-      {node.type === 'decision' && <Timer onTimeUp={handleTimeUp} />}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start animate-fade-in">
+    <div className="flex flex-col items-center gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start animate-fade-in w-full">
         <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-lg shadow-black/50 animate-flicker">
           {imageData && (
             <Image
@@ -70,9 +68,7 @@ export default function GamePage({ params }: { params: { nodeId: string } }) {
           <CardContent className="p-6">
             <p className="text-lg leading-relaxed text-foreground/90">{node.text}</p>
             {node.scenarioForAI && (
-              <Suspense>
-                <DynamicDescription scenario={node.scenarioForAI} previousChoices={previousChoices} />
-              </Suspense>
+               <p className="mt-4 text-accent/80 italic animate-fade-in">The air is thick with the smell of antiseptic and dread. Every shadow seems to writhe with a life of its own, and a profound sense of being watched sends shivers down your spine.</p>
             )}
           </CardContent>
           <CardFooter className="flex flex-col items-stretch gap-3">
@@ -90,6 +86,7 @@ export default function GamePage({ params }: { params: { nodeId: string } }) {
           </CardFooter>
         </Card>
       </div>
-    </>
+       {node.type === 'decision' && <Timer onTimeUp={handleTimeUp} />}
+    </div>
   );
 }
