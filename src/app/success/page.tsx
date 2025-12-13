@@ -21,21 +21,19 @@ export default function SuccessPage() {
 
     const handleJumpscareClick = () => {
         setShowWhiteScreen(true);
-        setTimeout(() => {
-            setIsJumpscareActive(true);
-            audioRef.current?.play().catch(e => console.error("Scream audio failed", e));
-        }, 100); // Short delay for white screen to appear
+        // Set the jumpscare to be active immediately with the white screen
+        setIsJumpscareActive(true);
+        audioRef.current?.play().catch(e => console.error("Scream audio failed", e));
         
         // End the jumpscare after 5 seconds
         setTimeout(() => {
             setIsJumpscareActive(false);
             setShowWhiteScreen(false);
-        }, 5100); // Total duration of the effect (100ms white screen + 5000ms video)
+        }, 5000);
     };
     
     if (showWhiteScreen) {
         return (
-            // Removed animate-fade-in from this div
             <div className="fixed inset-0 bg-white z-[100]">
                 {isJumpscareActive && (
                      <div className="fixed inset-0 bg-black flex items-center justify-center z-[101]">
