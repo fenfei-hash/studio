@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -23,18 +24,19 @@ export default function SuccessPage() {
         setTimeout(() => {
             setIsJumpscareActive(true);
             audioRef.current?.play().catch(e => console.error("Scream audio failed", e));
-        }, 500); // Wait for the white screen to appear
+        }, 100); // Short delay for white screen to appear
         
-        // End the jumpscare after a few seconds
+        // End the jumpscare after 5 seconds
         setTimeout(() => {
             setIsJumpscareActive(false);
             setShowWhiteScreen(false);
-        }, 3000); // Total duration of the effect
+        }, 5100); // Total duration of the effect (100ms white screen + 5000ms video)
     };
     
     if (showWhiteScreen) {
         return (
-            <div className="fixed inset-0 bg-white z-[100] animate-fade-in">
+            // Removed animate-fade-in from this div
+            <div className="fixed inset-0 bg-white z-[100]">
                 {isJumpscareActive && (
                      <div className="fixed inset-0 bg-black flex items-center justify-center z-[101]">
                         <video 
