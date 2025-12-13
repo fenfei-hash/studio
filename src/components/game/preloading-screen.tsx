@@ -14,7 +14,8 @@ const audioUrls = [
   "https://cdn.pixabay.com/audio/2022/03/10/audio_09968be149.mp3", // scream
 ];
 const videoUrls = [
-  "https://storage.googleapis.com/nightmare/nightmare%20(1).mp4" // jumpscare
+  "https://storage.googleapis.com/nightmare/nightmare%20(1).mp4", // game over jumpscare
+  "https://storage.googleapis.com/nightmare/one_last_scare.mp4", // success jumpscare
 ];
 
 const allAssets = [...imageUrls, ...audioUrls, ...videoUrls];
